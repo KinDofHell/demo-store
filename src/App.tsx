@@ -2,10 +2,10 @@ import "./App.scss";
 import Header from "./layouts/Header.tsx";
 import Card from "./components/Card.tsx";
 
-import image1 from "../public/images/photo_2023-07-23_14-31-12.jpg";
-import image2 from "../public/images/photo_2023-07-23_14-31-46.jpg";
-import image3 from "../public/images/photo_2023-07-23_14-31-50.jpg";
-import image4 from "../public/images/photo_2023-07-23_14-31-55.jpg";
+import image1 from "/images/photo_2023-07-23_14-31-12.jpg";
+import image2 from "/images/photo_2023-07-23_14-31-46.jpg";
+import image3 from "/images/photo_2023-07-23_14-31-50.jpg";
+import image4 from "/images/photo_2023-07-23_14-31-55.jpg";
 import { Key, useEffect, useState } from "react";
 
 const data = [
@@ -39,7 +39,16 @@ function App() {
   const [inCart, setInCart] = useState<number[]>([]);
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(inCart));
+    const cartData = localStorage.getItem("cart");
+    if (cartData) {
+      setInCart(JSON.parse(cartData));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (inCart.length > 0) {
+      localStorage.setItem("cart", JSON.stringify(inCart));
+    }
   }, [inCart]);
 
   return (
